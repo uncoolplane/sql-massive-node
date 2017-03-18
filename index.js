@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var cors = require('cors');
 var massive = require('massive');
+var config = require('./config');
 
 var app = express();
 var port = process.env.PORT || 8887;
@@ -12,12 +13,12 @@ var corsOptions = {
 
 app.use(express.static('public'));
 app.use(session({
-    secret: 'sql-massive-node'
+    secret: config.sessionSecret
 }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
-var connectionString = "postgres://postgres:admin@localhost/eCommerceDb";
+var connectionString = "postgres://" + config.dbUser + ":" + config.dbPassword + "@localhost/" + config.database;
 var instance = massive.connectSync({
   connectionString: connectionString
 });
