@@ -26,22 +26,22 @@ We are going to be working with a single table, products.  It's schema will look
 
 * Create a folder called db and place 5 files in there:
   * create_product
-  * read_products
-  * read_product
+  * get_products
+  * get_product
   * update_product
   * delete_product
-  
+
 * Create a working SQL query for each one.  You can use pgAdmin to test your queries against the database.
 
 __create_product__
 
 This query will need to take the 4 parameters defined in the schema and insert a record into the database.
 
-__read_products__
+__get_products__
 
 This query will get all products in the table and return only the name, price, and image url
 
-__read_product__
+__get_product__
 
 This query will take in an id and return all data for that product
 
@@ -61,11 +61,11 @@ This query will take in an id.  Find and delete the product with the id.
         * Create, GetOne, GetAll, Update, Delete
     * At the top of the controller (outside the object), get the db object off of our express app (see mini-project)
     * Inside of Create use the create_product query
-    * Inside of GetAll use the read_products query
-    * Inside of GetOne, use the read_product query
+    * Inside of GetAll use the get_products query
+    * Inside of GetOne, use the get_product query
     * Inside of Update, use the update_product query
     * Inside of Delete, use the delete_product query
-    
+
 
 ## Create endpoints
 

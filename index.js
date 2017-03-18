@@ -4,6 +4,7 @@ var session = require('express-session');
 var cors = require('cors');
 var massive = require('massive');
 var config = require('./config');
+var products = require('./controllers/products');
 
 var app = express();
 var port = process.env.PORT || 8887;
@@ -25,17 +26,31 @@ var instance = massive.connectSync({
 
 app.set('db', instance);
 
-//app.get('', cors(), function(req, res, next) {
-//  res.send('working');
-//})
+var db = app.get('db');
 
-//app.post('', cors(), function(req, res, next) {
-//  res.send('working');
-//})
+app.get('/api/products', cors(), function(req, res, next) {
+ res.send(products.getProducts(db));
+});
 
-//app.put('', cors(), function(req, res, next) {
-//  res.send('working');
-//})
+app.get('/api/product/:id', cors(), function(req, res, next) {
+  var id = req.params.id;
+  res.send(products.getProduct(db, id));
+});
+
+app.put('/api/product', cors(), function(req, res, next) {
+  var product = products.createProduct(db, req.body);
+  res.send(product);
+});
+
+app.post('/api/product', cors(), function(req, res, next) {
+   var product = products.updateProduct(db, req.body);
+   res.send(product);
+});
+
+app.delete('/api/product/:id', cors(), function(req, res, next) {
+  products.deleteProduct(db, req.params.id);
+  res.send(true);
+})
 
 app.listen(port, function() {
   console.log('Listening on port', port, 'for aliens');
