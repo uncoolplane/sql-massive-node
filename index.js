@@ -4,9 +4,9 @@ var session = require('express-session');
 var cors = require('cors');
 var massive = require('massive');
 var config = require('./config');
-var products = require('./controllers/products');
+var productsCtrl = require('./controllers/products');
 
-var app = express();
+var app = module.exports = express();
 var port = process.env.PORT || 8887;
 var corsOptions = {
   origin: 'http://localhost:' + port
@@ -28,28 +28,32 @@ app.set('db', instance);
 
 var db = app.get('db');
 
-app.get('/api/products', cors(), function(req, res, next) {
- res.send(products.getProducts(db));
+/*******Products*******/
+app.get('/api/products', function(req, res, next) {
+  productsCtrl.getProducts(db).then(function(products) {
+    res.status(200).send(products);
+  });
+  // console.log('2 products', products);
 });
 
-app.get('/api/product/:id', cors(), function(req, res, next) {
+app.get('/api/product/:id',  function(req, res, next) {
   var id = req.params.id;
-  res.send(products.getProduct(db, id));
+  res.send({product: productsCtrl.getProduct(db, id)});
 });
 
 app.put('/api/product', cors(), function(req, res, next) {
-  var product = products.createProduct(db, req.body);
-  res.send(product);
+  var product = productsCtrl.createProduct(db, req.body);
+  res.send({product: product});
 });
 
 app.post('/api/product', cors(), function(req, res, next) {
-   var product = products.updateProduct(db, req.body);
-   res.send(product);
+   var product = productsCtrl.updateProduct(db, req.body);
+   res.send({product: product});
 });
 
 app.delete('/api/product/:id', cors(), function(req, res, next) {
-  products.deleteProduct(db, req.params.id);
-  res.send(true);
+  productsCtrl.deleteProduct(db, req.params.id);
+  res.send({isUpdated:true});
 })
 
 app.listen(port, function() {

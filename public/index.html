@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="eCommerce">
   <head>
     <meta charset="utf-8">
-    <title>SQL Massive Node</title>
+    <title>eCommerce</title>
     <link rel="stylesheet" href="/css/style.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -13,12 +13,20 @@
   </head>
   <body>
     <div class="container">
-      <h1>SQL Massive Node</h1>
+      <h1>eCommerce</h1>
 
+      <ui-view></ui-view>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.js" charset="utf-8"></script>
+
+    <script src="./js/app.js" charset="utf-8"></script>
+    <script src="./services/productService.js" charset="utf-8"></script>
+    <script src="./views/productsCtrl.js" charset="utf-8"></script>
   </body>
 </html>
