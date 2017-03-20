@@ -6,5 +6,4 @@ angular.module('eCommerce').controller('productsCtrl', function($scope, productS
     }, function(err) {
       console.log(err);
     })
-$scope.test= "hi";
 })

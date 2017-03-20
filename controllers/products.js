@@ -1,15 +1,23 @@
-module.exports = {
-  getProducts: function(db) {
-    return new Promise(function(resolve, reject){
-      db.get_products([],function(err, products) {
-        if(err) {
-          console.log('getProducts', err);
-        }
-        console.log('products', products);
-         resolve(products);
-      })
-    });
-  },
+// var app = require('../index');
+
+  module.exports = {
+    getProducts: function(db) {
+      return new Promise(function(resolve, reject){
+        db.get_products([],function(err, products) {
+          if(err) {
+            console.log('getProducts', err);
+          }
+          console.log('products', products);
+           resolve(products);
+        })
+      });
+    },
+  // getProducts: function(db) {
+  //   // var db = app.get('db');
+  //   db.get_products(function(err, products) {
+  //     return products;
+  //   })
+  // },
   getProduct: function(db, id) {
     db.get_product([id], function(err, product) {
       if(err) {

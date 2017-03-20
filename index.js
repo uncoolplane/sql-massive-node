@@ -5,8 +5,10 @@ var cors = require('cors');
 var massive = require('massive');
 var config = require('./config');
 var productsCtrl = require('./controllers/products');
+var testCtrl = require('./controllers/test');
 
-var app = module.exports = express();
+var app = /*module.exports = */express();
+
 var port = process.env.PORT || 8887;
 var corsOptions = {
   origin: 'http://localhost:' + port
@@ -27,34 +29,14 @@ var instance = massive.connectSync({
 app.set('db', instance);
 
 var db = app.get('db');
+var productsCtrl = testCtrl(db);
 
 /*******Products*******/
-app.get('/api/products', function(req, res, next) {
-  productsCtrl.getProducts(db).then(function(products) {
-    res.status(200).send(products);
-  });
-  // console.log('2 products', products);
-});
-
-app.get('/api/product/:id',  function(req, res, next) {
-  var id = req.params.id;
-  res.send({product: productsCtrl.getProduct(db, id)});
-});
-
-app.put('/api/product', cors(), function(req, res, next) {
-  var product = productsCtrl.createProduct(db, req.body);
-  res.send({product: product});
-});
-
-app.post('/api/product', cors(), function(req, res, next) {
-   var product = productsCtrl.updateProduct(db, req.body);
-   res.send({product: product});
-});
-
-app.delete('/api/product/:id', cors(), function(req, res, next) {
-  productsCtrl.deleteProduct(db, req.params.id);
-  res.send({isUpdated:true});
-})
+app.get('/api/products', productsCtrl.getProducts);
+app.get('/api/product/:id', productsCtrl.getProduct);
+app.put('/api/product', productsCtrl.createProduct);
+app.post('/api/product', productsCtrl.updateProduct);
+app.delete('/api/product/:id', productsCtrl.deleteProduct);
 
 app.listen(port, function() {
   console.log('Listening on port', port, 'for aliens');
